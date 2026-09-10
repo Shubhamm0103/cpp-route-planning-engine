@@ -1,0 +1,5 @@
+from,to,weight
+A,B,4
+X,Y
+A,C,notanumber
+A,D,7
