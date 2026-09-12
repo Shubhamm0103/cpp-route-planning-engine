@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 void Graph::addVertex(const std::string& name) {
     if (adjList.find(name) == adjList.end()) {
         adjList[name] = {};

@@ -35,4 +35,58 @@ This produces three executables in `build/`:
 ./route_planner
 ```
 
-You'll be prompted for a CSV file path. Try the sample graph:
+You'll be prompted for a CSV file path. Try the sample graph: `../data/sample_graph.csv`
+
+CSV format:
+from,to,weight
+A,B,4
+A,C,2
+
+
+## Test
+
+```bash
+./run_tests
+```
+
+## Benchmark
+
+```bash
+./run_benchmark
+```
+
+## Project structure
+
+cpp-route-planning-engine/
+├── CMakeLists.txt
+├── README.md
+├── include/
+│ └── Graph.h
+├── src/
+│ ├── Graph.cpp
+│ └── main.cpp
+├── data/
+│ └── sample_graph.csv
+├── tests/
+│ └── test_graph.cpp
+├── benchmarks/
+│ └── benchmark.cpp
+└── docs/
+└── algorithm_analysis.md
+
+
+## Complexity
+
+See [`docs/algorithm_analysis.md`](docs/algorithm_analysis.md) for a full breakdown. Summary:
+
+| Algorithm | Time | Space |
+|---|---|---|
+| BFS | O(V + E) | O(V) |
+| DFS | O(V + E) | O(V) |
+| Dijkstra | O((V + E) log V) | O(V) |
+
+## Design decisions
+
+- **Undirected graph**: models roads as bidirectional by default.
+- **Duplicate edges overwrite**: re-adding an edge between the same two vertices updates its weight rather than creating a parallel edge — matches the real-world semantics of "this road's cost changed."
+- **Negative weights rejected**: Dijkstra is not correct with negative weights, so `addEdge` rejects them at insertion time rather than letting them silently corrupt shortest-path results.
